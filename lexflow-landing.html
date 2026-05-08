@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lexflow — Contrats freelance en 60 secondes</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #f7f4ef; --ink: #1a1a1a; --gold: #c9a84c;
+    --muted: #888; --border: #d8d0c4; --white: #ffffff;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: 'Libre Baskerville', serif; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--ink); display: flex; justify-content: space-between; align-items: center; padding: 0 48px; height: 56px; }
+  .logo { font-family: 'Libre Baskerville', serif; font-size: 18px; color: var(--cream); letter-spacing: 0.02em; }
+  .logo span { color: var(--gold); }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-link { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #888; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-link:hover { color: var(--cream); }
+  .nav-cta { font-family: 'IBM Plex Mono', monospace; font-size: 11px; background: var(--gold); color: var(--ink); padding: 10px 20px; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta:hover { background: #b8963e; }
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: var(--cream); z-index: 0; }
+  .hero-bg::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, #c9a84c18 0%, transparent 70%); border-radius: 50%; }
+  .deco-line { position: absolute; background: var(--border); opacity: 0.4; }
+  .deco-line-v { width: 1px; top: 0; bottom: 0; }
+  .deco-line-h { height: 1px; left: 0; right: 0; }
+  .hero-inner { position: relative; z-index: 1; max-width: 900px; width: 100%; text-align: center; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; background: #c9a84c12; border: 1px solid #c9a84c30; padding: 8px 16px; margin-bottom: 32px; animation: fadeUp 0.6s ease both; }
+  h1 { font-size: clamp(42px, 7vw, 88px); font-weight: 700; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 28px; animation: fadeUp 0.6s 0.1s ease both; }
+  h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--muted); line-height: 1.8; max-width: 560px; margin: 0 auto 48px; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+  .btn-primary { font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; background: var(--ink); color: var(--cream); padding: 16px 36px; text-decoration: none; transition: all 0.2s; display: inline-block; }
+  .btn-primary:hover { background: #333; transform: translateY(-2px); }
+  .btn-secondary { font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1px solid var(--border); padding: 16px 36px; text-decoration: none; transition: all 0.2s; display: inline-block; }
+  .btn-secondary:hover { border-color: var(--ink); }
+  .hero-stat { display: flex; justify-content: center; gap: 48px; margin-top: 72px; flex-wrap: wrap; animation: fadeUp 0.6s 0.4s ease both; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 36px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 6px; }
+  .stat-num span { color: var(--gold); }
+  .stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  .mockup-section { background: var(--ink); padding: 80px 48px; position: relative; overflow: hidden; }
+  .mockup-section::before { content: 'LEXFLOW'; font-family: 'Libre Baskerville', serif; font-size: 200px; font-weight: 700; color: #ffffff04; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); white-space: nowrap; pointer-events: none; }
+  .mockup-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+  .mockup-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; text-align: center; margin-bottom: 24px; }
+  .mockup-window { background: #f7f4ef; border: 1px solid #ffffff15; box-shadow: 0 40px 80px rgba(0,0,0,0.4); }
+  .mockup-bar { background: #1a1a1a; border-bottom: 1px solid #ffffff10; padding: 12px 16px; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .mockup-content { padding: 32px; }
+  .mock-steps { display: flex; gap: 8px; margin-bottom: 24px; }
+  .mock-step { flex: 1; height: 4px; background: #e8e2d8; border-radius: 2px; }
+  .mock-step.active { background: var(--gold); }
+  .mock-step.done { background: #1a1a1a; }
+  .mock-form { display: flex; flex-direction: column; gap: 12px; }
+  .mock-field { height: 40px; background: white; border: 1px solid #d8d0c4; }
+  .mock-field.filled { background: #fafaf8; border-color: #1a1a1a; }
+  .mock-btn { height: 44px; background: #1a1a1a; margin-top: 8px; }
+  .features { padding: 100px 48px; }
+  .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; text-align: center; margin-bottom: 16px; }
+  .section-title { font-size: clamp(28px, 4vw, 48px); font-weight: 700; text-align: center; margin-bottom: 16px; line-height: 1.15; }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-sub { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); text-align: center; max-width: 500px; margin: 0 auto 64px; line-height: 1.8; }
+  .features-grid { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; background: var(--border); }
+  .feature-card { background: var(--cream); padding: 40px 32px; transition: background 0.2s; }
+  .feature-card:hover { background: white; }
+  .feature-icon { font-size: 28px; margin-bottom: 20px; }
+  .feature-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+  .feature-desc { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); line-height: 1.8; }
+  .how { background: var(--ink); color: var(--cream); padding: 100px 48px; }
+  .how .section-title { color: var(--cream); }
+  .how .section-sub { color: #666; }
+  .steps-list { max-width: 700px; margin: 0 auto; }
+  .step-item { display: flex; gap: 32px; padding: 40px 0; border-bottom: 1px solid #ffffff10; align-items: flex-start; }
+  .step-item:last-child { border-bottom: none; }
+  .step-num { font-family: 'Libre Baskerville', serif; font-size: 48px; font-weight: 700; color: #ffffff15; line-height: 1; flex-shrink: 0; width: 60px; }
+  .step-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--cream); }
+  .step-desc { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #666; line-height: 1.8; }
+  .step-tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; background: #c9a84c20; color: var(--gold); padding: 4px 10px; letter-spacing: 0.1em; margin-top: 10px; }
+  .pricing { padding: 100px 48px; }
+  .pricing-grid { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
+  .pricing-card { background: var(--cream); padding: 40px 32px; }
+  .pricing-card.featured { background: var(--ink); color: var(--cream); }
+  .pricing-tier { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 20px; color: var(--muted); }
+  .pricing-card.featured .pricing-tier { color: var(--gold); }
+  .pricing-amount { font-size: 48px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+  .pricing-period { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 32px; }
+  .pricing-card.featured .pricing-period { color: #666; }
+  .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+  .pricing-features li { font-family: 'IBM Plex Mono', monospace; font-size: 12px; display: flex; gap: 10px; color: #555; }
+  .pricing-card.featured .pricing-features li { color: #aaa; }
+  .pricing-features li::before { content: '✦'; color: var(--gold); flex-shrink: 0; }
+  .btn-pricing { display: block; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 24px; text-decoration: none; transition: all 0.2s; }
+  .btn-pricing-outline { border: 1px solid var(--border); color: var(--ink); }
+  .btn-pricing-outline:hover { border-color: var(--ink); }
+  .btn-pricing-gold { background: var(--gold); color: white; }
+  .btn-pricing-gold:hover { background: #b8963e; }
+  .testimonials { background: white; padding: 100px 48px; }
+  .testimonials-grid { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .testimonial { border: 1px solid var(--border); padding: 32px; }
+  .testimonial-text { font-size: 15px; line-height: 1.75; margin-bottom: 24px; font-style: italic; }
+  .testimonial-author { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .testimonial-author strong { color: var(--ink); display: block; margin-bottom: 2px; font-style: normal; }
+  .stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+  .faq { padding: 100px 48px; }
+  .faq-list { max-width: 680px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q { font-size: 16px; font-weight: 700; padding: 24px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq-q:hover { color: var(--gold); }
+  .faq-icon { font-family: 'IBM Plex Mono', monospace; font-size: 18px; color: var(--gold); flex-shrink: 0; transition: transform 0.2s; }
+  .faq-a { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); line-height: 1.8; padding-bottom: 24px; display: none; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .cta-final { background: var(--ink); color: var(--cream); padding: 100px 48px; text-align: center; position: relative; overflow: hidden; }
+  .cta-final::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, #c9a84c15 0%, transparent 70%); }
+  .cta-final-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+  .cta-final h2 { font-size: clamp(32px, 5vw, 56px); font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+  .cta-final h2 em { font-style: italic; color: var(--gold); }
+  .cta-final p { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #666; line-height: 1.8; margin-bottom: 40px; }
+  .cta-disclaimer { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #444; margin-top: 20px; }
+  footer { background: #111; border-top: 1px solid #ffffff08; padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-logo { font-family: 'Libre Baskerville', serif; font-size: 16px; color: #666; }
+  .footer-logo span { color: var(--gold); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #444; text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+  .footer-link:hover { color: #888; }
+  .footer-copy { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #333; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; } .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .features, .how, .pricing, .testimonials, .faq, .cta-final { padding: 60px 24px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Lex<span>flow</span></div>
+  <div class="nav-links">
+    <a href="#features" class="nav-link">Fonctionnalités</a>
+    <a href="#pricing" class="nav-link">Tarifs</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <a href="#app" class="nav-cta">Commencer gratuitement</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="deco-line deco-line-v" style="left:15%"></div>
+    <div class="deco-line deco-line-v" style="right:15%"></div>
+    <div class="deco-line deco-line-h" style="top:35%"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-badge">✦ Alimenté par l'IA · Droit belge</div>
+    <h1>Votre contrat freelance<br>en <em>60 secondes.</em></h1>
+    <p class="hero-sub">Fini les modèles Word approximatifs et les avocats à 200€/h. Lexflow génère des contrats professionnels, juridiquement solides, adaptés au droit belge.</p>
+    <div class="hero-ctas">
+      <a href="#app" class="btn-primary">Créer mon contrat gratuitement</a>
+      <a href="#how" class="btn-secondary">Voir comment ça marche</a>
+    </div>
+    <div class="hero-stat">
+      <div class="stat"><div class="stat-num">1<span>M</span></div><div class="stat-label">Freelances en Belgique</div></div>
+      <div class="stat"><div class="stat-num">60<span>s</span></div><div class="stat-label">Pour générer un contrat</div></div>
+      <div class="stat"><div class="stat-num">0<span>€</span></div><div class="stat-label">Pour commencer</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="mockup-section">
+  <div class="mockup-inner">
+    <div class="mockup-label">Interface Lexflow</div>
+    <div class="mockup-window">
+      <div class="mockup-bar">
+        <div class="dot" style="background:#ff5f57"></div>
+        <div class="dot" style="background:#febc2e"></div>
+        <div class="dot" style="background:#28c840"></div>
+        <div style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#ffffff30">lexflow.be/contrat</div>
+      </div>
+      <div class="mockup-content">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#c9a84c;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px">Étape 2 · Mission</div>
+        <div style="font-family:'Libre Baskerville',serif;font-size:22px;font-weight:700;margin-bottom:4px">La mission</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#888;margin-bottom:24px">Décrivez la prestation · 30 secondes</div>
+        <div class="mock-steps"><div class="mock-step done"></div><div class="mock-step active"></div><div class="mock-step"></div><div class="mock-step"></div></div>
+        <div class="mock-form">
+          <div class="mock-field filled"></div>
+          <div class="mock-field filled"></div>
+          <div style="display:flex;gap:12px"><div class="mock-field filled" style="flex:1"></div><div class="mock-field" style="flex:1"></div></div>
+          <div class="mock-btn"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="features" id="features">
+  <div class="section-label reveal">Ce que vous obtenez</div>
+  <h2 class="section-title reveal">Tout ce dont un freelance <em>a besoin</em></h2>
+  <p class="section-sub reveal">Un contrat complet, professionnel et personnalisé en quelques clics.</p>
+  <div class="features-grid">
+    <div class="feature-card reveal"><div class="feature-icon">⚖️</div><div class="feature-title">Juridiquement solide</div><div class="feature-desc">Clauses rédigées selon le droit belge. Propriété intellectuelle, confidentialité, résiliation — tout y est.</div></div>
+    <div class="feature-card reveal"><div class="feature-icon">⚡</div><div class="feature-title">Généré en 60 secondes</div><div class="feature-desc">3 étapes simples. L'IA rédige un contrat complet et professionnel instantanément.</div></div>
+    <div class="feature-card reveal"><div class="feature-icon">✏️</div><div class="feature-title">Entièrement personnalisé</div><div class="feature-desc">Adapté à votre métier, votre client, votre montant. Chaque contrat est unique.</div></div>
+    <div class="feature-card reveal"><div class="feature-icon">📄</div><div class="feature-title">Export PDF Pro</div><div class="feature-desc">Téléchargez un PDF prêt à envoyer avec mise en page professionnelle.</div></div>
+    <div class="feature-card reveal"><div class="feature-icon">🔒</div><div class="feature-title">Vos données sécurisées</div><div class="feature-desc">Aucune donnée partagée. Vos contrats restent confidentiels.</div></div>
+    <div class="feature-card reveal"><div class="feature-icon">🇧🇪</div><div class="feature-title">100% droit belge</div><div class="feature-desc">Conçu pour les indépendants belges. BCE, TVA 21%, Code civil belge inclus.</div></div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="section-label reveal">Processus</div>
+  <h2 class="section-title reveal">Comment ça <em>fonctionne</em></h2>
+  <p class="section-sub reveal" style="color:#666">Trois étapes. Pas de compte requis pour commencer.</p>
+  <div class="steps-list">
+    <div class="step-item reveal"><div class="step-num">01</div><div><div class="step-title">Renseignez les parties</div><div class="step-desc">Vos informations et celles de votre client. Nom, adresse, BCE si besoin.</div><div class="step-tag">~30 secondes</div></div></div>
+    <div class="step-item reveal"><div class="step-num">02</div><div><div class="step-title">Décrivez la mission</div><div class="step-desc">Type de prestation, description, dates. L'IA adapte chaque clause à votre contexte.</div><div class="step-tag">~20 secondes</div></div></div>
+    <div class="step-item reveal"><div class="step-num">03</div><div><div class="step-title">Définissez les conditions</div><div class="step-desc">Montant HTVA, délai de paiement, propriété intellectuelle, confidentialité.</div><div class="step-tag">~10 secondes</div></div></div>
+    <div class="step-item reveal"><div class="step-num">04</div><div><div class="step-title">Votre contrat est prêt</div><div class="step-desc">Copiez, téléchargez en PDF ou envoyez directement à votre client.</div><div class="step-tag" style="background:#c9a84c30">Instantané ✦</div></div></div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="section-label reveal">Tarifs</div>
+  <h2 class="section-title reveal">Simple et <em>transparent</em></h2>
+  <p class="section-sub reveal">Commencez gratuitement. Passez Pro quand vous en avez besoin.</p>
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <div class="pricing-tier">Gratuit</div>
+      <div class="pricing-amount">0€</div>
+      <div class="pricing-period">pour toujours</div>
+      <ul class="pricing-features">
+        <li>2 contrats générés</li><li>Copie texte</li><li>Tous types de mission</li><li>Droit belge inclus</li>
+      </ul>
+      <a href="#app" class="btn-pricing btn-pricing-outline">Commencer</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-tier">Pro ✦</div>
+      <div class="pricing-amount" style="color:var(--gold)">14,90€</div>
+      <div class="pricing-period">/mois · sans engagement</div>
+      <ul class="pricing-features">
+        <li>Contrats illimités</li><li>Export PDF professionnel</li><li>Signature électronique</li><li>Historique complet</li><li>Modèles personnalisés</li><li>Support prioritaire</li>
+      </ul>
+      <a href="#app" class="btn-pricing btn-pricing-gold">Passer Pro →</a>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-label reveal">Témoignages</div>
+  <h2 class="section-title reveal">Ils l'utilisent <em>déjà</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial reveal"><div class="stars">★★★★★</div><div class="testimonial-text">"J'avais l'habitude d'utiliser des modèles Word approximatifs. Lexflow génère quelque chose de bien plus professionnel en quelques secondes."</div><div class="testimonial-author"><strong>Marie L.</strong>Designer UX — Bruxelles</div></div>
+    <div class="testimonial reveal"><div class="stars">★★★★★</div><div class="testimonial-text">"Enfin un outil adapté aux freelances belges. Les clauses de propriété intellectuelle sont impeccables pour mes missions photo."</div><div class="testimonial-author"><strong>Thomas B.</strong>Photographe indépendant — Gand</div></div>
+    <div class="testimonial reveal"><div class="stars">★★★★★</div><div class="testimonial-text">"Je génère un contrat en 60 secondes avant chaque mission. Mes clients sont impressionnés par le professionnalisme des documents."</div><div class="testimonial-author"><strong>Sofia M.</strong>Consultante marketing — Liège</div></div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="section-label reveal">Questions fréquentes</div>
+  <h2 class="section-title reveal">Tout ce que vous <em>voulez savoir</em></h2>
+  <div class="faq-list">
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">Ces contrats ont-ils une valeur juridique ? <span class="faq-icon">+</span></div><div class="faq-a">Les contrats générés par Lexflow sont rédigés selon le droit belge et contiennent toutes les clauses essentielles. Ils ont la même valeur juridique qu'un contrat rédigé manuellement dès lors qu'ils sont signés par les deux parties. Pour les missions importantes, nous recommandons une relecture par un professionnel du droit.</div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">Mes données sont-elles sécurisées ? <span class="faq-icon">+</span></div><div class="faq-a">Oui. Vos données ne sont jamais partagées ni revendues. Les contrats générés sont accessibles uniquement par vous. Nous ne conservons aucune donnée personnelle au-delà de la session.</div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">Puis-je modifier le contrat après génération ? <span class="faq-icon">+</span></div><div class="faq-a">Absolument. Le contrat est généré en texte brut que vous pouvez copier et modifier dans n'importe quel éditeur. Les abonnés Pro peuvent télécharger un PDF éditable.</div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)">Comment annuler l'abonnement Pro ? <span class="faq-icon">+</span></div><div class="faq-a">L'abonnement Pro est sans engagement. Annulez à tout moment depuis votre espace personnel. Aucun frais d'annulation.</div></div>
+  </div>
+</section>
+
+<section class="cta-final" id="app">
+  <div class="cta-final-inner">
+    <div class="section-label" style="color:var(--gold)">Prêt à commencer ?</div>
+    <h2>Votre premier contrat <em>est gratuit.</em></h2>
+    <p>Rejoignez des milliers de freelances belges qui protègent leurs missions avec Lexflow. Aucune carte bancaire requise.</p>
+    <a href="./contrat-freelance.html" class="btn-primary" style="font-size:14px;padding:18px 40px">Créer mon contrat maintenant →</a>
+    <div class="cta-disclaimer">✦ Gratuit · Sans compte · Résultat en 60 secondes</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Lex<span>flow</span> · Belgique</div>
+  <div class="footer-links">
+    <a href="lexflow-legal.html" class="footer-link">Mentions légales</a>
+    <a href="lexflow-legal.html" class="footer-link">CGV</a>
+    <a href="lexflow-legal.html" class="footer-link">Confidentialité</a>
+    <a href="mailto:contact@lexflow.be" class="footer-link">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Lexflow · Belgique · Tous droits réservés</div>
+</footer>
+
+<script>
+  function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+  const obs = new IntersectionObserver(entries => { entries.forEach((e,i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*60); obs.unobserve(e.target); } }); }, {threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
