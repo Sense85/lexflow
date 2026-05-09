@@ -332,7 +332,7 @@ Rédige un contrat professionnel complet, avec tous les articles nécessaires, a
               14,90€<span style={{ fontSize: "13px", color: "#aaa", fontFamily: "'IBM Plex Mono', monospace", fontWeight: 300 }}>/mois</span>
             </div>
             <button className="btn btn-gold" style={{ width: "100%", marginBottom: "10px", fontSize: "13px" }}>Commencer maintenant →</button>
-            <button className="btn btn-outline" style={{ width: "100%", fontSize: "11px" }} onClick={() => window.open("VOTRE_LIEN_STRIPE")}>Plus tard</button>
+            <button className="btn btn-outline" style={{ width: "100%", fontSize: "11px" }} onClick={() => window.open(window.open("https://buy.stripe.com/6oU14f65i0lL0Ca7d13F600"))}>Plus tard</button>
           </div>
         </div>
       )}
