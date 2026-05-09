@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lexflow — Mentions légales & CGV</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #f7f4ef;
+    --ink: #1a1a1a;
+    --gold: #c9a84c;
+    --muted: #888;
+    --border: #d8d0c4;
+  }
+  body { background: var(--cream); color: var(--ink); font-family: 'Libre Baskerville', serif; }
+
+  nav {
+    background: var(--ink); padding: 0 48px;
+    display: flex; justify-content: space-between; align-items: center; height: 56px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { font-family: 'Libre Baskerville', serif; font-size: 18px; color: var(--cream); text-decoration: none; }
+  .logo span { color: var(--gold); }
+
+  .tabs {
+    background: white; border-bottom: 1px solid var(--border);
+    display: flex; padding: 0 48px; gap: 0;
+    position: sticky; top: 56px; z-index: 99;
+  }
+  .tab {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 18px 24px; cursor: pointer; border: none; background: none;
+    color: var(--muted); border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab.active { color: var(--ink); border-bottom-color: var(--gold); }
+  .tab:hover { color: var(--ink); }
+
+  .page { display: none; max-width: 760px; margin: 0 auto; padding: 64px 24px 100px; }
+  .page.active { display: block; }
+
+  .page-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px; }
+  .page-title { font-size: clamp(28px, 4vw, 42px); font-weight: 700; line-height: 1.15; margin-bottom: 8px; }
+  .page-title em { font-style: italic; color: var(--gold); }
+  .page-date { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+
+  .toc { background: white; border: 1px solid var(--border); padding: 28px 32px; margin-bottom: 48px; }
+  .toc-title { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
+  .toc-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .toc-list li a { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink); text-decoration: none; display: flex; gap: 12px; align-items: baseline; transition: color 0.2s; }
+  .toc-list li a:hover { color: var(--gold); }
+  .toc-list li a::before { content: '✦'; color: var(--gold); font-size: 9px; flex-shrink: 0; }
+
+  .section { margin-bottom: 48px; }
+  .section-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+  .section h2 { font-size: 20px; font-weight: 700; margin-bottom: 20px; line-height: 1.3; }
+  .section h3 { font-size: 15px; font-weight: 700; margin: 24px 0 12px; }
+  .section p { font-size: 14px; line-height: 1.9; color: #333; margin-bottom: 14px; }
+  .section ul { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .section ul li { font-size: 14px; line-height: 1.7; color: #333; padding-left: 20px; position: relative; }
+  .section ul li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+  .section-divider { height: 1px; background: var(--border); margin-bottom: 48px; }
+
+  .highlight-box { background: white; border: 1px solid var(--border); border-left: 3px solid var(--gold); padding: 20px 24px; margin: 20px 0; }
+  .highlight-box p { margin: 0; font-size: 13px; line-height: 1.7; color: #555; }
+
+  .warning-box { background: #fff9ec; border: 1px solid #f0d98a; border-left: 3px solid var(--gold); padding: 20px 24px; margin: 20px 0; }
+  .warning-box p { margin: 0; font-size: 13px; line-height: 1.7; color: #8a6d00; }
+
+  .contact-card { background: var(--ink); color: var(--cream); padding: 32px; margin-top: 40px; }
+  .contact-card .cc-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; }
+  .contact-card p { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #aaa; line-height: 1.8; margin: 0; }
+  .contact-card a { color: var(--gold); text-decoration: none; }
+
+  footer { background: #111; border-top: 1px solid #ffffff08; padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-logo { font-family: 'Libre Baskerville', serif; font-size: 15px; color: #666; }
+  .footer-logo span { color: var(--gold); }
+  .footer-copy { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #333; }
+
+  @media (max-width: 768px) {
+    nav, .tabs { padding: 0 20px; }
+    .tabs { overflow-x: auto; }
+    .tab { white-space: nowrap; padding: 16px 16px; }
+    footer { padding: 24px 20px; flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="lexflow-landing.html" class="logo">Lex<span>flow</span></a>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#444;letter-spacing:0.1em;">Belgique · RGPD</div>
+</nav>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('mentions')">Mentions légales</button>
+  <button class="tab" onclick="showTab('confidentialite')">Politique de confidentialité</button>
+  <button class="tab" onclick="showTab('cgv')">CGV</button>
+</div>
+
+<!-- ==================== MENTIONS LÉGALES ==================== -->
+<div class="page active" id="mentions">
+  <div class="page-label">Document légal</div>
+  <h1 class="page-title">Mentions <em>légales</em></h1>
+  <div class="page-date">Dernière mise à jour : mai 2026 · Conformes au droit belge</div>
+
+  <div class="section">
+    <div class="section-num">01</div>
+    <h2>Éditeur du site</h2>
+    <p>Le site lexflow.be est édité par :</p>
+    <ul>
+      <li><strong>Nom :</strong> [Votre nom complet]</li>
+      <li><strong>Statut :</strong> Indépendant / [Votre forme juridique]</li>
+      <li><strong>Numéro BCE :</strong> [BE 0XXX.XXX.XXX]</li>
+      <li><strong>Adresse :</strong> [Votre adresse complète, Belgique]</li>
+      <li><strong>Email :</strong> contact@lexflow.be</li>
+      <li><strong>Numéro de TVA :</strong> [BE 0XXX.XXX.XXX]</li>
+    </ul>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-num">02</div>
+    <h2>Hébergement</h2>
+    <ul>
+      <li><strong>Hébergeur :</strong> Vercel Inc.</li>
+      <li><strong>Adresse :</strong> 340 Pine Street, Suite 701, San Francisco, CA 94104, États-Unis</li>
+      <li><strong>Site :</strong> vercel.com</li>
+    </ul>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-num">03</div>
+    <h2>Propriété intellectuelle</h2>
+    <p>L'ensemble du contenu du site lexflow.be (textes, graphismes, logo, interface, code) est la propriété exclusive de l'éditeur et est protégé par les lois belges et internationales relatives à la propriété intellectuelle.</p>
+    <p>Toute reproduction, représentation, modification ou exploitation, totale ou partielle, du contenu du site sans autorisation expresse et préalable est strictement interdite.</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-num">04</div>
+    <h2>Limitation de responsabilité</h2>
+    <div class="warning-box">
+      <p>⚠️ Les contrats générés par Lexflow le sont à titre indicatif uniquement. Ils ne constituent pas un avis juridique et ne remplacent pas les conseils d'un avocat ou d'un professionnel du droit. L'éditeur décline toute responsabilité quant à l'utilisation qui serait faite des documents générés.</p>
+    </div>
+    <p>L'éditeur s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur le site, mais ne peut garantir l'exhaustivité ou l'absence d'erreur du contenu.</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-num">05</div>
+    <h2>Droit applicable</h2>
+    <p>Le présent site et ses mentions légales sont soumis au droit belge. Tout litige relatif à l'utilisation du site sera soumis à la compétence exclusive des tribunaux belges.</p>
+  </div>
+</div>
+
+<!-- ==================== POLITIQUE DE CONFIDENTIALITÉ ==================== -->
+<div class="page" id="confidentialite">
+  <div class="page-label">RGPD · Droit belge</div>
+  <h1 class="page-title">Politique de <em>confidentialité</em></h1>
+  <div class="page-date">Dernière mise à jour : mai 2026 · Conforme au Règlement (UE) 2016/679 (RGPD)</div>
+
+  <div class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#c1">1. Qui est responsable du traitement ?</a></li>
+      <li><a href="#c2">2. Quelles données collectons-nous ?</a></li>
+      <li><a href="#c3">3. Pourquoi collectons-nous vos données ?</a></li>
+      <li><a href="#c4">4. Combien de temps conservons-nous vos données ?</a></li>
+      <li><a href="#c5">5. Vos données sont-elles partagées ?</a></li>
+      <li><a href="#c6">6. Vos droits</a></li>
+      <li><a href="#c7">7. Cookies</a></li>
+      <li><a href="#c8">8. Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="section" id="c1">
+    <div class="section-num">01</div>
+    <h2>Responsable du traitement</h2>
+    <p>Le responsable du traitement des données personnelles collectées via le site lexflow.be est :</p>
+    <ul>
+      <li>[Votre nom complet], indépendant belge</li>
+      <li>BCE : [BE 0XXX.XXX.XXX]</li>
+      <li>Email : contact@lexflow.be</li>
+      <li>Adresse : [Votre adresse, Belgique]</li>
+    </ul>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="c2">
+    <div class="section-num">02</div>
+    <h2>Données collectées</h2>
+    <h3>Données saisies dans le formulaire</h3>
+    <p>Lors de la génération d'un contrat, vous nous communiquez volontairement les informations suivantes :</p>
+    <ul>
+      <li>Nom et prénom du prestataire</li>
+      <li>Adresse du prestataire</li>
+      <li>Numéro BCE (optionnel)</li>
+      <li>Nom et adresse du client</li>
+      <li>Description de la mission</li>
+      <li>Montant et conditions financières</li>
+    </ul>
+    <div class="highlight-box">
+      <p>Ces données sont transmises directement à l'API d'Anthropic (Claude) pour générer le contrat. Elles ne sont pas stockées sur nos serveurs après la génération.</p>
+    </div>
+
+    <h3>Données de paiement (abonnés Pro)</h3>
+    <p>Les paiements sont traités exclusivement par <strong>Stripe Inc.</strong> Lexflow ne collecte ni ne stocke jamais vos données bancaires. Stripe est certifié PCI-DSS niveau 1.</p>
+
+    <h3>Données de navigation</h3>
+    <p>À des fins d'analyse et d'amélioration du service, nous pouvons collecter des données anonymisées de navigation (pages visitées, durée de session) via des outils d'analyse respectueux de la vie privée.</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="c3">
+    <div class="section-num">03</div>
+    <h2>Finalités du traitement</h2>
+    <p>Vos données sont utilisées uniquement pour :</p>
+    <ul>
+      <li>Générer le contrat freelance demandé</li>
+      <li>Gérer votre abonnement Pro (si applicable)</li>
+      <li>Vous envoyer des informations relatives à votre compte (factures, confirmations)</li>
+      <li>Améliorer la qualité du service</li>
+    </ul>
+    <p>La base légale du traitement est votre consentement (art. 6.1.a RGPD) et l'exécution du contrat de service (art. 6.1.b RGPD).</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="c4">
+    <div class="section-num">04</div>
+    <h2>Durée de conservation</h2>
+    <ul>
+      <li><strong>Données du formulaire :</strong> non conservées après génération du contrat</li>
+      <li><strong>Données de compte Pro :</strong> conservées pendant la durée de l'abonnement + 3 ans (obligations comptables belges)</li>
+      <li><strong>Données de navigation anonymisées :</strong> 13 mois maximum</li>
+    </ul>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="c5">
+    <div class="section-num">05</div>
+    <h2>Partage des données</h2>
+    <p>Vos données ne sont jamais vendues ni cédées à des tiers à des fins commerciales. Elles peuvent être partagées uniquement avec :</p>
+    <ul>
+      <li><strong>Anthropic Inc.</strong> (API Claude) — pour la génération du contrat uniquement</li>
+      <li><strong>Stripe Inc.</strong> — pour le traitement des paiements</li>
+      <li><strong>Vercel Inc.</strong> — pour l'hébergement du site</li>
+    </ul>
+    <p>Ces sous-traitants sont liés par des accords de traitement conformes au RGPD.</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="c6">
+    <div class="section-num">06</div>
+    <h2>Vos droits</h2>
+    <p>Conformément au RGPD et à la loi belge du 30 juillet 2018, vous disposez des droits suivants :</p>
+    <ul>
+      <li><strong>Droit d'accès</strong> — obtenir une copie de vos données</li>
+      <li><strong>Droit de rectification</strong> — corriger vos données inexactes</li>
+      <li><strong>Droit à l'effacement</strong> — demander la suppression de vos données</li>
+      <li><strong>Droit à la portabilité</strong> — recevoir vos données dans un format structuré</li>
+      <li><strong>Droit d'opposition</strong> — vous opposer à certains traitements</li>
+      <li><strong>Droit de limitation</strong> — limiter le traitement de vos données</li>
+    </ul>
+    <p>Pour exercer ces droits, contactez-nous à : <strong>contact@lexflow.be</strong></p>
+    <p>Vous pouvez également introduire une réclamation auprès de l'<strong>Autorité de protection des données (APD)</strong> belge : <strong>apd-gba.be</strong></p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="c7">
+    <div class="section-num">07</div>
+    <h2>Cookies</h2>
+    <p>Lexflow utilise un nombre minimal de cookies, strictement nécessaires au fonctionnement du service (session, préférences). Aucun cookie publicitaire ou de tracking tiers n'est utilisé.</p>
+    <div class="highlight-box">
+      <p>Lexflow ne contient aucune publicité et ne vend aucune donnée à des annonceurs.</p>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="c8">
+    <div class="section-num">08</div>
+    <h2>Contact</h2>
+    <div class="contact-card">
+      <div class="cc-label">Délégué à la protection des données</div>
+      <p>Pour toute question relative à vos données personnelles :<br>
+      📧 <a href="mailto:contact@lexflow.be">contact@lexflow.be</a><br>
+      Réponse sous 30 jours maximum conformément au RGPD.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CGV ==================== -->
+<div class="page" id="cgv">
+  <div class="page-label">Conditions générales</div>
+  <h1 class="page-title">Conditions générales <em>de vente</em></h1>
+  <div class="page-date">Dernière mise à jour : mai 2026 · Droit belge applicable</div>
+
+  <div class="toc">
+    <div class="toc-title">Sommaire</div>
+    <ul class="toc-list">
+      <li><a href="#v1">1. Objet</a></li>
+      <li><a href="#v2">2. Description des services</a></li>
+      <li><a href="#v3">3. Tarifs et paiement</a></li>
+      <li><a href="#v4">4. Abonnement et résiliation</a></li>
+      <li><a href="#v5">5. Droit de rétractation</a></li>
+      <li><a href="#v6">6. Limitation de responsabilité</a></li>
+      <li><a href="#v7">7. Propriété intellectuelle</a></li>
+      <li><a href="#v8">8. Droit applicable et litiges</a></li>
+    </ul>
+  </div>
+
+  <div class="section" id="v1">
+    <div class="section-num">01</div>
+    <h2>Objet</h2>
+    <p>Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles entre Lexflow (ci-après « le Prestataire ») et toute personne physique ou morale (ci-après « le Client ») souhaitant accéder aux services proposés sur le site lexflow.be.</p>
+    <p>Toute utilisation du service implique l'acceptation pleine et entière des présentes CGV.</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="v2">
+    <div class="section-num">02</div>
+    <h2>Description des services</h2>
+    <h3>Offre gratuite</h3>
+    <ul>
+      <li>Génération de 2 contrats freelance par compte</li>
+      <li>Copie du texte généré</li>
+      <li>Accès à tous les types de missions</li>
+    </ul>
+    <h3>Offre Pro (14,90€ TVAC/mois)</h3>
+    <ul>
+      <li>Génération de contrats illimitée</li>
+      <li>Export PDF professionnel</li>
+      <li>Signature électronique</li>
+      <li>Historique des contrats</li>
+      <li>Modèles personnalisés</li>
+      <li>Support prioritaire</li>
+    </ul>
+    <div class="warning-box">
+      <p>⚠️ Les contrats générés par Lexflow sont produits par intelligence artificielle à titre indicatif. Ils ne constituent pas un conseil juridique et ne remplacent pas l'intervention d'un professionnel du droit.</p>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="v3">
+    <div class="section-num">03</div>
+    <h2>Tarifs et paiement</h2>
+    <p>Les prix sont indiqués en euros, toutes taxes comprises (TVAC), TVA belge de 21% incluse.</p>
+    <p>Le paiement s'effectue en ligne via la plateforme sécurisée <strong>Stripe</strong>, par carte bancaire (Visa, Mastercard, American Express) ou autre moyen de paiement proposé.</p>
+    <p>L'abonnement Pro est facturé mensuellement à la date anniversaire de la souscription. Une facture est émise automatiquement à chaque renouvellement.</p>
+    <p>En cas d'échec de paiement, l'accès aux fonctionnalités Pro est suspendu jusqu'à régularisation.</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="v4">
+    <div class="section-num">04</div>
+    <h2>Abonnement et résiliation</h2>
+    <p>L'abonnement Pro est souscrit sans engagement de durée minimale. Le Client peut résilier à tout moment depuis son espace personnel.</p>
+    <p>La résiliation prend effet à la fin de la période de facturation en cours. Aucun remboursement au prorata n'est accordé pour la période restante.</p>
+    <p>Lexflow se réserve le droit de résilier un abonnement en cas de non-respect des présentes CGV, avec un préavis de 15 jours par email.</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="v5">
+    <div class="section-num">05</div>
+    <h2>Droit de rétractation</h2>
+    <p>Conformément à l'article VI.47 du Code de droit économique belge, le Client consommateur dispose d'un délai de <strong>14 jours calendrier</strong> à compter de la souscription pour exercer son droit de rétractation, sans avoir à justifier sa décision.</p>
+    <p>Toutefois, en souscrivant à l'offre Pro et en commençant immédiatement à utiliser le service, le Client reconnaît expressément renoncer à ce droit de rétractation pour la partie du service déjà exécutée.</p>
+    <p>Pour exercer ce droit, contactez-nous à : <strong>contact@lexflow.be</strong></p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="v6">
+    <div class="section-num">06</div>
+    <h2>Limitation de responsabilité</h2>
+    <p>Lexflow s'engage à mettre en œuvre tous les moyens raisonnables pour assurer la disponibilité et la qualité du service. Toutefois, la responsabilité de Lexflow ne pourra être engagée en cas de :</p>
+    <ul>
+      <li>Utilisation juridique inappropriée d'un contrat généré</li>
+      <li>Interruption temporaire du service pour maintenance</li>
+      <li>Force majeure ou défaillance d'un prestataire tiers</li>
+      <li>Dommages indirects résultant de l'utilisation du service</li>
+    </ul>
+    <p>En tout état de cause, la responsabilité de Lexflow est limitée au montant des sommes effectivement payées par le Client au cours des 3 derniers mois.</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="v7">
+    <div class="section-num">07</div>
+    <h2>Propriété intellectuelle</h2>
+    <p>Le Client conserve l'entière propriété des contrats générés via Lexflow à partir de ses propres données. Ces documents lui appartiennent et peuvent être utilisés librement.</p>
+    <p>En revanche, le code source, le design, la marque "Lexflow" et l'ensemble des éléments constitutifs du service restent la propriété exclusive de l'éditeur.</p>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="section" id="v8">
+    <div class="section-num">08</div>
+    <h2>Droit applicable et litiges</h2>
+    <p>Les présentes CGV sont soumises au <strong>droit belge</strong>. En cas de litige, les parties s'efforceront de trouver une solution amiable.</p>
+    <p>À défaut d'accord amiable, tout litige relatif à la formation, l'interprétation ou l'exécution des présentes CGV sera soumis à la compétence exclusive des <strong>tribunaux belges</strong> du ressort du siège social de l'éditeur.</p>
+    <p>Pour les litiges de consommation, le Client peut également recourir au service de médiation en ligne de la Commission européenne : <strong>ec.europa.eu/consumers/odr</strong></p>
+
+    <div class="contact-card">
+      <div class="cc-label">Une question sur nos CGV ?</div>
+      <p>📧 <a href="mailto:contact@lexflow.be">contact@lexflow.be</a><br>
+      Nous répondons sous 48 heures ouvrables.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Lex<span>flow</span> · Belgique</div>
+  <div class="footer-copy">© 2026 Lexflow · Tous droits réservés</div>
+</footer>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
